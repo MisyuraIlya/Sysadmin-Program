@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Scanner</title>
+	<link rel="stylesheet" href="https://cdn.metroui.org.ua/v4/css/metro-all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <script type="text/javascript" src="/eel.js"></script>
+</head>
+<body> <!--=oncontextmenu="return false" onselectstart="return false" ondragstart="return false">-->
+
+    <h2>Welcome to Sysadmin program</h2>
+  <div class="container" id="container">
+  	<div class="form-container sign-up-container">
+  		<form action="#">
+  			<h1>Create Account</h1>
+<!--  			<div class="social-container">-->
+<!--  				<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>-->
+<!--  				<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>-->
+<!--  				<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>-->
+<!--  			</div>-->
+  			<span>or use your email for registration</span>
+  			<input type="text" placeholder="Name" />
+  			<input type="username" placeholder="Username" />
+  			<input type="password1" placeholder="Password" />
+            <input type="password2" placeholder="Password exists" />
+  			<button>Sign Up</button>
+  		</form>
+  	</div>
+  	<div class="form-container sign-in-container">
+  		<form action="#">
+  			<h1>Sign in</h1>
+<!--  			<div class="social-container">-->
+<!--  				<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>-->
+<!--  				<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>-->
+<!--  				<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>-->
+<!--  			</div>-->
+  			<span>or use your account</span>
+  			<input type="username" placeholder="Username" />
+  			<input type="password" placeholder="Password" />
+  			<a href="#">Forgot your password?</a>
+  			<button>Sign In</button>
+  		</form>
+  	</div>
+  	<div class="overlay-container">
+  		<div class="overlay">
+  			<div class="overlay-panel overlay-left">
+  				<h1>Welcome Back!</h1>
+  				<p>To keep connected with us please login with your personal info</p>
+  				<button class="ghost" id="signIn">Sign In</button>
+  			</div>
+  			<div class="overlay-panel overlay-right">
+  				<h1>Hello, Friend!</h1>
+  				<p>Enter your personal details and start journey with us</p>
+  				<button class="ghost" id="signUp">Sign Up</button>
+  			</div>
+  		</div>
+  	</div>
+  </div>
+
+  <footer>
+  	<p>
+  		Created by Ilya Misyura
+
+  		all information and copies can find in my github :
+  		<a target="_blank" href="https://github.com/MisyuraIlya">here</a>.
+  	</p>
+  </footer>
+  <script type="text/javascript">
+  const signUpButton = document.getElementById('signUp');
+const signInButton = document.getElementById('signIn');
+const container = document.getElementById('container');
+
+signUpButton.addEventListener('click', () => {
+container.classList.add("right-panel-active");
+});
+
+signInButton.addEventListener('click', () => {
+container.classList.remove("right-panel-active");
+});
+  </script>
+
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script src="https://cdn.metroui.org.ua/v4/js/metro.min.js"></script>
+    <script>
+        var progress = null;
+
+        async function start_scan() {
+            taskStart();
+            let value = await eel.start_scan($("#netowrkId").val())();
+            for (item of value){
+                $("#resultView").append(`<li>${item}</li>`);
+            }
+            taskEnd();
+        }
+
+        function taskStart(){
+            progress = Metro.activity.open({
+                type: 'square',
+                overlayColor: '#fff',
+                overlayAlpha: 1,
+                text: '<div class=\'mt-2 text-small\'>Please, wait...</div>',
+                overlayClickClose: true
+            });
+        }
+
+        eel.expose(taskEnd);
+        function taskEnd() {
+            Metro.activity.close(progress);
+        }
+
+        $("#btnHome").on("click",function () {
+            $("#sectionResult").fadeOut('500');
+            $("#sectionHome").delay(250).fadeIn('500');
+        });
+
+        $("#btnResult").on("click",function () {
+            $("#sectionHome").fadeOut('500');
+            $("#sectionResult").delay(500).fadeIn('500');
+        });
+
+    </script>
+</body>
+</html>
